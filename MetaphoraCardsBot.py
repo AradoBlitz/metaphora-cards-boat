@@ -27,20 +27,12 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 
-def selectCard(sex, sphere_life):
-    values =  "./карты для бота/" + sex + "/" + sphere_life + "/" + random.choice(os.listdir("./карты для бота" 
-    + "/" + sex + "/" + sphere_life))
-    return values
-
-
-
-
 @dp.callback_query_handler(lambda c: c.data == 'вашакарта')
 async def process_get_card_button(callback_query: types.CallbackQuery, state: FSMContext):
     
     await bot.answer_callback_query(callback_query.id)
     async with state.proxy() as data: 
-        await bot.send_photo(callback_query.from_user.id, photo=InputFile(selectCard(str(list(data.values())[0]), str(list(data.values())[1]))))  
+        await bot.send_photo(callback_query.from_user.id, photo=InputFile(cards.selectCard(str(list(data.values())[0]), str(list(data.values())[1]))))  
         await bot.send_message(callback_query.from_user.id, str(list(data.values())))
     
 
