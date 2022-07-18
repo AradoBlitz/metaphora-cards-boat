@@ -36,12 +36,12 @@ async def process_get_card_button(callback_query: types.CallbackQuery, state: FS
         await bot.send_message(callback_query.from_user.id, str(list(data.values())))
     
 
-@dp.callback_query_handler(lambda c: c.data == 'здоровье' 
-        or c.data == 'карта-послание'
-        or c.data == 'о себе'
-        or c.data == 'отношения'
-        or c.data == 'работа (карьера)'
-        or c.data == 'что делать')
+@dp.callback_query_handler(lambda c: c.data == 'health' 
+        or c.data == 'message-card'
+        or c.data == 'me'
+        or c.data == 'relationships'
+        or c.data == 'work-career'
+        or c.data == 'what-to-do')
 async def process_sphere_life(callback_query: types.CallbackQuery, state: FSMContext):
     await state.update_data(sphere_life = callback_query.data)
     
@@ -52,8 +52,8 @@ async def process_sphere_life(callback_query: types.CallbackQuery, state: FSMCon
     await bot.send_message(callback_query.from_user.id,
             'Сформулируйте вопрос', reply_markup=kb.get_card_kb)
 
-@dp.callback_query_handler(lambda c: c.data == 'мужчины'
-        or c.data == 'женщины')
+@dp.callback_query_handler(lambda c: c.data == 'man'
+        or c.data == 'woman')
 async def process_sex_button(callback_query: types.CallbackQuery, state: FSMContext):
   
     async with state.proxy() as data:
