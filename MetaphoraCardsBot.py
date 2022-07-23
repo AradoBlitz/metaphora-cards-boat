@@ -63,7 +63,7 @@ async def process_sex_button(callback_query: types.CallbackQuery, state: FSMCont
     
     await bot.answer_callback_query(callback_query.id);
     await bot.send_message(callback_query.from_user.id,
-            'Сфера жизни',
+            'Из какой области ваш вопрос?',
             reply_markup= kb.sphere_life_kb);
     
 

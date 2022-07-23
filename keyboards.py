@@ -3,7 +3,7 @@ from aiogram.types import ReplyKeyboardRemove, \
     InlineKeyboardMarkup, InlineKeyboardButton
 import descriptions as txt
 
-guid_description = InlineKeyboardButton('Что такое метод карт?', callback_data='button1')
+guid_description = InlineKeyboardButton('Как работают метафорические карты?', callback_data='button1')
 guide_how_question_form = InlineKeyboardButton('Правила формирования вопроса', callback_data='button2')
 guide_interpritation = InlineKeyboardButton('Как интерпритировать?', callback_data='button3')
 action_select_card = InlineKeyboardButton('Выбрать карту',callback_data='button4')
@@ -26,7 +26,7 @@ sphere_life_kb.add(InlineKeyboardButton('Работа (карьера)', callbac
 sphere_life_kb.add(InlineKeyboardButton('Здоровье', callback_data='health'))
 sphere_life_kb.add(InlineKeyboardButton('О себе', callback_data='me'))
 sphere_life_kb.add(InlineKeyboardButton('Карта-послание', callback_data='message-card'))
-sphere_life_kb.add(InlineKeyboardButton('Что делать', callback_data='what-to-do' ))
+sphere_life_kb.add(InlineKeyboardButton('Что делать?', callback_data='what-to-do' ))
 
 form_question_kb = InlineKeyboardMarkup()
 form_question_kb.add(InlineKeyboardButton('Сформируйте вопрос', callback_data='вопрос'))
