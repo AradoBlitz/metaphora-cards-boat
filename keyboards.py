@@ -9,8 +9,9 @@ guide_interpritation = InlineKeyboardButton('Как интерпритирова
 action_select_card = InlineKeyboardButton('Выбрать карту',callback_data='button4')
 
 inline_kb = InlineKeyboardMarkup(row_width=2)
-inline_kb.add(guid_description, guide_interpritation)
-inline_kb.row(guide_how_question_form)
+inline_kb.add(guid_description)
+inline_kb.add(guide_interpritation)
+inline_kb.add(guide_how_question_form)
 inline_kb.add(action_select_card)
 
 select_card_kb = InlineKeyboardMarkup()
