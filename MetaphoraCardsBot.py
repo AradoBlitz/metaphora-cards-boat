@@ -32,10 +32,11 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 async def process_get_card_button(callback_query: types.CallbackQuery, state: FSMContext):
     
     await bot.answer_callback_query(callback_query.id)
+
     async with state.proxy() as data: 
         await bot.send_photo(callback_query.from_user.id, photo=InputFile(cards.selectCard(str(list(data.values())[0]), str(list(data.values())[1]))))  
-        await bot.send_message(callback_query.from_user.id, str(list(data.values())))
-    
+        print(str(list(data.values())))
+
 
 @dp.callback_query_handler(lambda c: c.data == 'health' 
         or c.data == 'message-card'
@@ -92,7 +93,7 @@ async def process_button3(callback_query: types.CallbackQuery):
 async def process_button4(callback_query: types.CallbackQuery, state: FSMContext):
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(callback_query.from_user.id, 
-            'card panel', 
+            'Ваш пол?', 
             reply_markup=kb.sex_kb)
 
 @dp.message_handler(commands=['start','help'])
