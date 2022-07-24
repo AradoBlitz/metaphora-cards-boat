@@ -5,7 +5,7 @@ import descriptions as txt
 
 guid_description = InlineKeyboardButton('Как работают метафорические карты?', callback_data='button1')
 guide_how_question_form = InlineKeyboardButton('Правила формирования вопроса', callback_data='button2')
-guide_interpritation = InlineKeyboardButton('Как интерпритировать?', callback_data='button3')
+guide_interpritation = InlineKeyboardButton('Как интерпретировать?', callback_data='button3')
 action_select_card = InlineKeyboardButton('Выбрать карту',callback_data='button4')
 
 inline_kb = InlineKeyboardMarkup(row_width=2)
