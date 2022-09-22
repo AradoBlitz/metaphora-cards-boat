@@ -15,6 +15,7 @@ import files as cards
 import menu as mn
 import descriptions as txt
 import keyboards as kb
+import reply_keyboards as reply_kb
 
 
 from aiogram import Bot, Dispatcher, executor, types
@@ -22,9 +23,11 @@ from aiogram import Bot, Dispatcher, executor, types
 logging.basicConfig(level=logging.INFO)
 
 API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
-PROXY_URL = 'http://proxy.server:3128'
+#PROXY_URL = 'http://proxy.server:3128'
 
-bot = Bot(token=API_TOKEN, proxy=PROXY_URL)
+#bot = Bot(token=API_TOKEN, proxy=PROXY_URL)
+
+bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 
@@ -96,9 +99,13 @@ async def process_button4(callback_query: types.CallbackQuery, state: FSMContext
             'Ваш пол?', 
             reply_markup=kb.sex_kb)
 
-@dp.message_handler(commands=['start','help'])
-async def send_welcome(message: types.Message):
+@dp.message_handler(commands=['cards'])
+async def send_cards(message: types.Message):
     await message.reply(txt.greeting, reply_markup=kb.inline_kb)
+
+@dp.message_handler(commands=['start','help'])
+async def sen_welcome(message: types.Message):
+    await message.reply(txt.greeting, reply_markup=reply_kb.greet_bt)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
