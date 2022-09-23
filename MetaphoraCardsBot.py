@@ -2,6 +2,7 @@ import os, random
 
 import logging
 from typing import Text
+from aiogram.dispatcher.filters import state
 
 from aiogram.types import message, reply_keyboard
 from aiogram.types import callback_query
@@ -30,15 +31,21 @@ API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+class Form(StatesGroup):
+    sex = State()
+    sphereLife = State()
+    question = State()
 
-@dp.callback_query_handler(lambda c: c.data == 'вашакарта')
+@dp.callback_query_handler(lambda c: c.data == 'вашакарта', state = Form.sphereLife)
 async def process_get_card_button(callback_query: types.CallbackQuery, state: FSMContext):
     
     await bot.answer_callback_query(callback_query.id)
+    print("return card")
+    async with state.proxy() as data:
+        await bot.send_photo(callback_query.from_user.id, photo=InputFile(cards.selectCard(str(list(data.values())[0]), str(list(data.values())[1]))))   
+    await state.finish()
 
-    async with state.proxy() as data: 
-        await bot.send_photo(callback_query.from_user.id, photo=InputFile(cards.selectCard(str(list(data.values())[0]), str(list(data.values())[1]))))  
-        print(str(list(data.values())))
+    print(str(list(data.values())))
 
 
 @dp.callback_query_handler(lambda c: c.data == 'health' 
@@ -46,24 +53,24 @@ async def process_get_card_button(callback_query: types.CallbackQuery, state: FS
         or c.data == 'me'
         or c.data == 'relationships'
         or c.data == 'work-career'
-        or c.data == 'what-to-do')
+        or c.data == 'what-to-do', state = Form.sex)
 async def process_sphere_life(callback_query: types.CallbackQuery, state: FSMContext):
     await state.update_data(sphere_life = callback_query.data)
     
     async with state.proxy() as data:
         data["sphere_life"] = callback_query.data
-    
+    await Form.sphereLife.set()
     await bot.answer_callback_query(callback_query.id)
     await bot.send_message(callback_query.from_user.id,
             'Сформулируйте вопрос', reply_markup=kb.get_card_kb)
 
 @dp.callback_query_handler(lambda c: c.data == 'man'
-        or c.data == 'woman')
+        or c.data == 'woman', state = "*")
 async def process_sex_button(callback_query: types.CallbackQuery, state: FSMContext):
   
     async with state.proxy() as data:
         data["sex"] = callback_query.data
-    
+    await Form.next()
     await bot.answer_callback_query(callback_query.id);
     await bot.send_message(callback_query.from_user.id,
             'Из какой области ваш вопрос?',
