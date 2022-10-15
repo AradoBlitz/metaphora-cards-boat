@@ -24,11 +24,10 @@ from aiogram import Bot, Dispatcher, executor, types
 logging.basicConfig(level=logging.INFO)
 
 API_TOKEN = os.getenv("TELEGRAM_API_TOKEN")
-#PROXY_URL = 'http://proxy.server:3128'
+PROXY_URL = 'http://proxy.server:3128'
 
-#bot = Bot(token=API_TOKEN, proxy=PROXY_URL)
+bot = Bot(token=API_TOKEN, proxy=PROXY_URL)
 
-bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 class Form(StatesGroup):
@@ -65,7 +64,7 @@ async def process_sphere_life(callback_query: types.CallbackQuery, state: FSMCon
             'Сформулируйте вопрос', reply_markup=kb.get_card_kb)
 
 @dp.callback_query_handler(lambda c: c.data == 'man'
-        or c.data == 'woman', state = "*")
+        or c.data == 'woman', state = None)
 async def process_sex_button(callback_query: types.CallbackQuery, state: FSMContext):
   
     async with state.proxy() as data:
@@ -112,7 +111,7 @@ async def send_cards(message: types.Message):
 
 @dp.message_handler(commands=['start','help'])
 async def sen_welcome(message: types.Message):
-    await message.reply(txt.greeting, reply_markup=reply_kb.greet_bt)
+    await message.reply(txt.greeting, reply_markup=reply_kb.menue_kb)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
